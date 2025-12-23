@@ -1,8 +1,8 @@
-// File: C:\Users\Nemitha\OneDrive\Documents\GitHub\AgriScience Website\app\products\[id]\page.tsx
-import * as entry from '../../../../../app/products/[id]/page.js'
+// File: C:\Users\Nemitha\OneDrive\Documents\GitHub\AgriScience Website\app\about\page.tsx
+import * as entry from '../../../../app/about/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
-type TEntry = typeof import('../../../../../app/products/[id]/page.js')
+type TEntry = typeof import('../../../../app/about/page.js')
 
 // Check that the entry is a valid entry
 checkFields<Diff<{
