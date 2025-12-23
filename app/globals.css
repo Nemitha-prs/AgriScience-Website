@@ -2,21 +2,136 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 255, 255, 255;
-  --background-end-rgb: 255, 255, 255;
+  /* Color Variables */
+  --primary-green-dark: #1a5f3a;
+  --primary-green: #2d7a4f;
+  --primary-green-light: #3d9b64;
+  --secondary-gold: #d4a574;
+  --secondary-amber: #e8b44c;
+  --accent-earth: #8b6f47;
+  --accent-terracotta: #c65d3b;
+  --neutral-charcoal: #2c3e50;
+  --neutral-gray: #7f8c8d;
+  --neutral-light: #ecf0f1;
+  --neutral-cream: #f8f9fa;
+  --white: #ffffff;
+  --black: #0f1419;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-family: 'Inter', 'Open Sans', sans-serif;
+  color: var(--neutral-charcoal);
+  background: var(--white);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', 'Montserrat', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--neutral-charcoal);
+}
+
+/* Smooth scrolling for anchor links */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--neutral-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-green);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-green-dark);
+}
+
+/* Utility Classes */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .underline-animate {
+    position: relative;
+  }
+  
+  .underline-animate::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary-green);
+    transition: width 0.3s ease;
+  }
+  
+  .underline-animate:hover::after {
+    width: 100%;
+  }
+  
+  .gradient-text {
+    background: linear-gradient(135deg, var(--primary-green-dark), var(--primary-green-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .card-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+  
+  .image-zoom {
+    overflow: hidden;
+  }
+  
+  .image-zoom img {
+    transition: transform 0.4s ease;
+  }
+  
+  .image-zoom:hover img {
+    transform: scale(1.1);
+  }
+}
+
+
 
 
 
