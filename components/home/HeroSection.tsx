@@ -4,12 +4,36 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { ArrowRight } from 'lucide-react';
+import { useState, useEffect, useMemo } from 'react';
 
 export default function HeroSection() {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.2,
   });
+
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Memoize particles for performance and SSR safety
+  const particles = useMemo(() => {
+    if (typeof window === 'undefined') return []; // Skip on SSR
+    const particleCount = 20;
+    const particlesArray = [];
+    for (let i = 0; i < particleCount; i++) {
+      particlesArray.push({
+        id: i,
+        left: Math.random() * 100,
+        top: Math.random() * 100,
+        duration: Math.random() * 10 + 10,
+        randomY: Math.random() * -100,
+      });
+    }
+    return particlesArray;
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -63,31 +87,30 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-br from-primary-green-dark/80 via-primary-green-dark/70 to-neutral-charcoal/80" />
         
         {/* Animated Particles/Floating Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(20)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-2 h-2 bg-white/20 rounded-full"
-              initial={{
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
-              }}
-              animate={{
-                y: [null, Math.random() * -100],
-                opacity: [0.2, 0.5, 0.2],
-              }}
-              transition={{
-                duration: Math.random() * 10 + 10,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-            />
-          ))}
-        </div>
+        {isMounted && (
+          <div className="absolute inset-0 overflow-hidden">
+            {particles.map((particle) => (
+              <motion.div
+                key={particle.id}
+                className="absolute w-2 h-2 bg-white/20 rounded-full"
+                initial={{ opacity: 0.2 }}
+                animate={{
+                  y: particle.randomY,
+                  opacity: [0.2, 0.5, 0.2],
+                }}
+                transition={{
+                  duration: particle.duration,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+                style={{
+                  left: `${particle.left}%`,
+                  top: `${particle.top}%`,
+                }}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Content Container */}

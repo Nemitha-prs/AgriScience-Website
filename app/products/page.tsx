@@ -8,6 +8,15 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
 
+// Custom hook to safely use useInView only on the client
+const useSafeInView = (options?: Parameters<typeof useInView>[0]) => {
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  return useInView({ ...options, skip: !isClient });
+};
+
 function ProductsPageContent() {
   const searchParams = useSearchParams();
   
@@ -20,12 +29,12 @@ function ProductsPageContent() {
   const [categories, setCategories] = useState<string[]>([]);
 
   // Animation hooks - optimized to prevent lag
-  const [heroRef, heroInView] = useInView({
+  const [heroRef, heroInView] = useSafeInView({
     triggerOnce: true,
     threshold: 0.1,
   });
 
-  const [productsRef, productsInView] = useInView({
+  const [productsRef, productsInView] = useSafeInView({
     triggerOnce: true,
     threshold: 0.05,
   });
