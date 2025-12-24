@@ -1,11 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
 import { ArrowLeft, Check, Package, Leaf, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 
@@ -17,20 +16,58 @@ interface Product {
   created_at: string;
 }
 
+// Safe useInView hook that handles SSR
+function useSafeInView(options: { triggerOnce?: boolean; threshold?: number } = {}) {
+  const [inView, setInView] = useState(false);
+  const [ref, setRef] = useState<HTMLElement | null>(null);
+  const hasTriggered = useRef(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !ref) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          if (options.triggerOnce && hasTriggered.current) return;
+          hasTriggered.current = true;
+        } else if (!options.triggerOnce) {
+          setInView(false);
+        }
+      },
+      { threshold: options.threshold || 0 }
+    );
+
+    observer.observe(ref);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [ref, options.triggerOnce, options.threshold]);
+
+  return [setRef, inView] as const;
+}
+
 export default function ProductDetailPage() {
   const params = useParams();
   const router = useRouter();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
-  // Animation hooks
-  const [imageRef, imageInView] = useInView({
+  // Ensure component is mounted before using browser APIs
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Animation hooks - using safe custom hook
+  const [imageRef, imageInView] = useSafeInView({
     triggerOnce: true,
     threshold: 0.2,
   });
 
-  const [contentRef, contentInView] = useInView({
+  const [contentRef, contentInView] = useSafeInView({
     triggerOnce: true,
     threshold: 0.1,
   });
@@ -149,37 +186,54 @@ export default function ProductDetailPage() {
 
   return (
     <div className="min-h-screen bg-neutral-cream">
-      {/* Hero Section with Gradient Background */}
-      <section className="relative py-20 bg-gradient-to-br from-primary-green-dark via-primary-green to-primary-green-light overflow-hidden">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(15)].map((_, i) => {
-            const randomLeft = Math.random() * 100;
-            const randomTop = Math.random() * 100;
-            const randomDuration = Math.random() * 10 + 10;
-            const randomY = Math.random() * -100;
-            
-            return (
-              <motion.div
-                key={i}
-                className="absolute w-2 h-2 bg-white/20 rounded-full"
-                initial={{ opacity: 0.2 }}
-                animate={{
-                  y: randomY,
-                  opacity: [0.2, 0.5, 0.2],
-                }}
-                transition={{
-                  duration: randomDuration,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-                style={{
-                  left: `${randomLeft}%`,
-                  top: `${randomTop}%`,
-                }}
-              />
-            );
-          })}
+      {/* Hero Section with Background Image */}
+      <section className="relative py-20 overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <motion.div
+            initial={{ scale: 1.1 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 1.5, ease: [0.25, 0.4, 0.25, 1] }}
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: 'url(/images/products/info-bg.jpg)',
+            }}
+          />
+          {/* Gradient Overlay for Better Readability */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary-green-dark/80 via-primary-green-dark/70 to-neutral-charcoal/80" />
+          
+          {/* Animated Background Elements */}
+          {isMounted && (
+            <div className="absolute inset-0 overflow-hidden">
+              {[...Array(15)].map((_, i) => {
+                const randomLeft = Math.random() * 100;
+                const randomTop = Math.random() * 100;
+                const randomDuration = Math.random() * 10 + 10;
+                const randomY = Math.random() * -100;
+                
+                return (
+                  <motion.div
+                    key={i}
+                    className="absolute w-2 h-2 bg-white/20 rounded-full"
+                    initial={{ opacity: 0.2 }}
+                    animate={{
+                      y: randomY,
+                      opacity: [0.2, 0.5, 0.2],
+                    }}
+                    transition={{
+                      duration: randomDuration,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                    style={{
+                      left: `${randomLeft}%`,
+                      top: `${randomTop}%`,
+                    }}
+                  />
+                );
+              })}
+            </div>
+          )}
         </div>
 
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
@@ -200,9 +254,11 @@ export default function ProductDetailPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-white mb-4"
+              className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-4 leading-tight"
             >
-              {product.name}
+              <span className="block bg-gradient-to-r from-white via-secondary-gold to-white bg-clip-text text-transparent">
+                {product.name}
+              </span>
             </motion.h1>
           </motion.div>
         </div>
@@ -212,13 +268,15 @@ export default function ProductDetailPage() {
       <section className="py-16">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 lg:items-center">
               {/* Product Image */}
               <motion.div
-                ref={imageRef}
+                ref={(node) => {
+                  if (node) imageRef(node);
+                }}
                 variants={imageVariants}
-                initial="hidden"
-                animate={imageInView ? 'visible' : 'hidden'}
+                initial={isMounted ? "hidden" : "visible"}
+                animate={isMounted && imageInView ? 'visible' : 'visible'}
                 className="relative w-full h-[400px] lg:h-[600px] rounded-2xl overflow-hidden shadow-2xl group"
               >
                 {product.image_url ? (
@@ -241,10 +299,12 @@ export default function ProductDetailPage() {
 
               {/* Product Details */}
               <motion.div
-                ref={contentRef}
+                ref={(node) => {
+                  if (node) contentRef(node);
+                }}
                 variants={containerVariants}
-                initial="hidden"
-                animate={contentInView ? 'visible' : 'hidden'}
+                initial={isMounted ? "hidden" : "visible"}
+                animate={isMounted && contentInView ? 'visible' : 'visible'}
                 className="space-y-8"
               >
                 {/* Description Section */}
@@ -324,33 +384,6 @@ export default function ProductDetailPage() {
               </motion.div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Related Products Section Placeholder */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center"
-          >
-            <h2 className="text-3xl font-heading font-bold text-neutral-charcoal mb-4">
-              Explore More Products
-            </h2>
-            <p className="text-neutral-gray mb-8 max-w-2xl mx-auto">
-              Discover our full range of premium agricultural solutions
-            </p>
-            <Link
-              href="/products"
-              className="inline-flex items-center px-8 py-4 bg-primary-green text-white rounded-lg font-semibold hover:bg-primary-green-dark transition-colors shadow-md hover:shadow-lg"
-            >
-              View All Products
-              <ArrowLeft className="ml-2 h-5 w-5 rotate-180" />
-            </Link>
-          </motion.div>
         </div>
       </section>
     </div>
