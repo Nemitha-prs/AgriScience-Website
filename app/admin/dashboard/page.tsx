@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabaseClient';
 import AdminProductForm from '@/components/AdminProductForm';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -29,12 +28,10 @@ export default function AdminDashboard() {
 
   const fetchProducts = async () => {
     try {
-      const { data, error } = await supabase
-        .from('products')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
+      const response = await fetch('/api/products');
+      if (!response.ok) throw new Error('Failed to fetch products');
+      
+      const data = await response.json();
       setProducts(data || []);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -47,8 +44,12 @@ export default function AdminDashboard() {
     if (!confirm('Are you sure you want to delete this product?')) return;
 
     try {
-      const { error } = await supabase.from('products').delete().eq('id', id);
-      if (error) throw error;
+      const response = await fetch(`/api/products/${id}`, {
+        method: 'DELETE',
+      });
+      
+      if (!response.ok) throw new Error('Failed to delete product');
+      
       fetchProducts();
     } catch (error) {
       console.error('Error deleting product:', error);
@@ -57,8 +58,13 @@ export default function AdminDashboard() {
   };
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    window.location.href = '/admin/login';
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      window.location.href = '/admin/login';
+    } catch (error) {
+      console.error('Logout error:', error);
+      window.location.href = '/admin/login';
+    }
   };
 
   const handleFormSuccess = () => {

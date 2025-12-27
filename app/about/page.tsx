@@ -410,11 +410,11 @@ export default function AboutPage() {
                     <div className="bg-white rounded-2xl p-6 shadow-lg border border-neutral-light hover:border-primary-green/30 transition-colors">
                       <div className="flex items-start gap-4">
                         <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-primary-green to-primary-green-dark flex items-center justify-center">
-                          <Star className="w-6 h-6 text-white" />
+                          <Users className="w-6 h-6 text-white" />
                         </div>
                         <div>
                           <p className="text-sm font-semibold text-neutral-gray uppercase tracking-wide mb-1">Experience</p>
-                          <p className="text-base text-neutral-charcoal font-medium">[X] years in agricultural science and international trade</p>
+                          <p className="text-base text-neutral-charcoal font-medium">31 years in local and global agriculture field, working directly with farmers, understanding their challenges and providing tailored agricultural solutions</p>
                         </div>
                       </div>
                     </div>
@@ -425,18 +425,40 @@ export default function AboutPage() {
                         </div>
                         <div>
                           <p className="text-sm font-semibold text-neutral-gray uppercase tracking-wide mb-1">Education</p>
-                          <p className="text-base text-neutral-charcoal font-medium">[Educational background and qualifications]</p>
+                          <p className="text-base text-neutral-charcoal font-medium">Diploma in Agriculture and Agriculture Marketing</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-white rounded-2xl p-6 shadow-lg border border-neutral-light hover:border-primary-green/30 transition-colors">
+                      <div className="flex items-start gap-4">
+                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+                          <Shield className="w-6 h-6 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-neutral-gray uppercase tracking-wide mb-1">Crop Protection</p>
+                          <p className="text-base text-neutral-charcoal font-medium">Expert in crop protection strategies, helping farmers safeguard their crops from pests, diseases, and environmental challenges</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-white rounded-2xl p-6 shadow-lg border border-neutral-light hover:border-secondary-gold/30 transition-colors">
+                      <div className="flex items-start gap-4">
+                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                          <TrendingUp className="w-6 h-6 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-neutral-gray uppercase tracking-wide mb-1">Yield Enhancement</p>
+                          <p className="text-base text-neutral-charcoal font-medium">Specialized knowledge in yield enhancement techniques and harvesting index optimization to maximize crop productivity</p>
                         </div>
                       </div>
                     </div>
                     <div className="md:col-span-2 bg-white rounded-2xl p-6 shadow-lg border border-neutral-light hover:border-primary-green/30 transition-colors">
                       <div className="flex items-start gap-4">
-                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
                           <Globe className="w-6 h-6 text-white" />
                         </div>
                         <div>
                           <p className="text-sm font-semibold text-neutral-gray uppercase tracking-wide mb-1">Areas of Expertise</p>
-                          <p className="text-base text-neutral-charcoal font-medium">International agricultural trade, supply chain management, sustainable farming practices</p>
+                          <p className="text-base text-neutral-charcoal font-medium">Crop protection, yield enhancement, harvesting index optimization, farmer relations, agricultural marketing, and sustainable farming practices</p>
                         </div>
                       </div>
                     </div>

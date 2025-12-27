@@ -68,6 +68,7 @@ export default function Footer() {
                      alt="AgriScience Internationals"
                      fill
                      className="object-contain object-left"
+                     unoptimized
                    />
                  </div>
                 <div className="flex gap-2 mt-4">
@@ -99,6 +100,7 @@ export default function Footer() {
                     <li key={link.name}>
                       <Link
                         href={link.href}
+                        prefetch={true}
                         className="text-gray-400 hover:text-secondary-gold transition-colors text-sm"
                       >
                         {link.name}
@@ -113,22 +115,22 @@ export default function Footer() {
                  <h4 className="font-bold text-sm mb-4 text-white uppercase tracking-wider">Legal</h4>
                  <ul className="space-y-2">
                    <li>
-                     <Link href="/privacy-policy" className="text-gray-400 hover:text-secondary-gold transition-colors text-sm">
+                     <Link href="/privacy-policy" prefetch={true} className="text-gray-400 hover:text-secondary-gold transition-colors text-sm">
                        Privacy Policy
                      </Link>
                    </li>
                    <li>
-                     <Link href="/terms-conditions" className="text-gray-400 hover:text-secondary-gold transition-colors text-sm">
+                     <Link href="/terms-conditions" prefetch={true} className="text-gray-400 hover:text-secondary-gold transition-colors text-sm">
                        Terms & Conditions
                      </Link>
                    </li>
                    <li>
-                     <Link href="/cookie-policy" className="text-gray-400 hover:text-secondary-gold transition-colors text-sm">
+                     <Link href="/cookie-policy" prefetch={true} className="text-gray-400 hover:text-secondary-gold transition-colors text-sm">
                        Cookie Policy
                      </Link>
                    </li>
                    <li>
-                     <Link href="/disclaimer" className="text-gray-400 hover:text-secondary-gold transition-colors text-sm">
+                     <Link href="/disclaimer" prefetch={true} className="text-gray-400 hover:text-secondary-gold transition-colors text-sm">
                        Disclaimer
                      </Link>
                    </li>
@@ -140,21 +142,21 @@ export default function Footer() {
                 <h4 className="font-bold text-sm mb-4 text-white uppercase tracking-wider">Contact</h4>
                 <ul className="space-y-2">
                   <li>
-                    <a href="tel:+94112345678" className="flex items-center gap-2 text-gray-400 hover:text-secondary-gold transition-colors text-sm">
+                    <a href="tel:+94773667823" className="flex items-center gap-2 text-gray-400 hover:text-secondary-gold transition-colors text-sm">
                       <Phone className="h-4 w-4 text-secondary-gold" />
-                      <span>+94 XX XXX XXXX</span>
+                      <span>+94 77 366 7823</span>
                     </a>
                   </li>
                   <li>
-                    <a href="mailto:info@agriscience.lk" className="flex items-center gap-2 text-gray-400 hover:text-secondary-gold transition-colors text-sm">
+                    <a href="mailto:agriinternationalco@gmail.com" className="flex items-center gap-2 text-gray-400 hover:text-secondary-gold transition-colors text-sm">
                       <Mail className="h-4 w-4 text-secondary-gold" />
-                      <span>info@agriscience.lk</span>
+                      <span>agriinternationalco@gmail.com</span>
                     </a>
                   </li>
                   <li>
-                    <div className="flex items-center gap-2 text-gray-400 text-sm">
-                      <MapPin className="h-4 w-4 text-secondary-gold" />
-                      <span>Colombo, Sri Lanka</span>
+                    <div className="flex items-start gap-2 text-gray-400 text-sm">
+                      <MapPin className="h-4 w-4 text-secondary-gold mt-0.5 flex-shrink-0" />
+                      <span>Thushara, Medagoda,<br />Kamburugamuwa,<br />Matara</span>
                     </div>
                   </li>
                 </ul>

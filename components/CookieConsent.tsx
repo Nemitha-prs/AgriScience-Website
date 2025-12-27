@@ -39,8 +39,8 @@ export default function CookieConsent() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex-1">
             <p className="text-gray-700 text-sm md:text-base">
-              We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.{' '}
-              <Link href="/cookie-policy" className="text-primary-600 underline hover:text-primary-700">
+              We use minimal cookies (admin session only) and localStorage to remember your preferences. We do not track or collect your data.{' '}
+              <Link href="/cookie-policy" prefetch={true} className="text-primary-600 underline hover:text-primary-700">
                 Learn more
               </Link>
             </p>

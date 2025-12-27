@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Disclaimer | AgriScience',
-  description: 'AgriScience Disclaimer - Important information about product information, usage, and limitations.',
+  title: 'Disclaimer | AgriScience Internationals',
+  description: 'AgriScience Internationals Disclaimer - Important information about product information, usage, and limitations.',
   robots: 'index, follow',
 };
 
@@ -24,7 +24,7 @@ export default function DisclaimerPage() {
           {/* Page Header */}
           <div className="bg-white rounded-lg shadow-sm p-8 mb-8">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">Disclaimer</h1>
-            <p className="text-gray-600">Last Updated: December 23, 2024</p>
+            <p className="text-gray-600">Last Updated: January 2025</p>
           </div>
 
           {/* Content */}
@@ -32,7 +32,7 @@ export default function DisclaimerPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">General Disclaimer</h2>
               <p className="text-gray-700 leading-relaxed">
-                The information provided on the AgriScience website is for general informational purposes only. While we strive to provide accurate and up-to-date information, we make no representations or warranties of any kind, express or implied, about the completeness, accuracy, reliability, suitability, or availability of the information, products, services, or related graphics contained on the website.
+                The information provided on the AgriScience Internationals (pvt) LTD website is for general informational purposes only. While we strive to provide accurate and up-to-date information, we make no representations or warranties of any kind, express or implied, about the completeness, accuracy, reliability, suitability, or availability of the information, products, services, or related graphics contained on the website.
               </p>
             </section>
 
@@ -77,7 +77,7 @@ export default function DisclaimerPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Use at Your Own Risk</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
-                Any reliance you place on information from this website is strictly at your own risk. AgriScience shall not be liable for:
+                Any reliance you place on information from this website is strictly at your own risk. AgriScience Internationals (pvt) LTD shall not be liable for:
               </p>
               <ul className="list-disc pl-6 mb-4 text-gray-700 leading-relaxed space-y-2">
                 <li>Crop failures or agricultural losses</li>
@@ -92,7 +92,7 @@ export default function DisclaimerPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">External Links Disclaimer</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
-                Our website may contain links to external websites not operated by AgriScience. We have no control over and assume no responsibility for:
+                Our website may contain links to external websites not operated by AgriScience Internationals (pvt) LTD. We have no control over and assume no responsibility for:
               </p>
               <ul className="list-disc pl-6 mb-4 text-gray-700 leading-relaxed space-y-2">
                 <li>Content, accuracy, or availability of external sites</li>
@@ -105,7 +105,7 @@ export default function DisclaimerPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Testimonials and Reviews Disclaimer</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
-                Customer testimonials and reviews reflect individual experiences and opinions. They are not verified by AgriScience and:
+                Customer testimonials and reviews reflect individual experiences and opinions. They are not verified by AgriScience Internationals (pvt) LTD and:
               </p>
               <ul className="list-disc pl-6 mb-4 text-gray-700 leading-relaxed space-y-2">
                 <li>Do not constitute professional endorsements</li>
@@ -168,7 +168,7 @@ export default function DisclaimerPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Limitation of Warranties</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
-                TO THE MAXIMUM EXTENT PERMITTED BY LAW, AGRISCIENCE DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO:
+                TO THE MAXIMUM EXTENT PERMITTED BY LAW, AGRISCIENCE INTERNATIONALS (PVT) LTD DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO:
               </p>
               <ul className="list-disc pl-6 mb-4 text-gray-700 leading-relaxed space-y-2">
                 <li>MERCHANTABILITY</li>
@@ -199,10 +199,10 @@ export default function DisclaimerPage() {
                 For questions or clarifications regarding this Disclaimer:
               </p>
               <div className="bg-gray-50 p-6 rounded-lg">
-                <p className="text-gray-700 leading-relaxed mb-2"><strong>AgriScience Pvt Ltd</strong></p>
-                <p className="text-gray-700 leading-relaxed mb-2">123 Agricultural Avenue, Colombo 00700, Sri Lanka</p>
-                <p className="text-gray-700 leading-relaxed mb-2">Email: <a href="mailto:info@agriscience.com" className="text-primary-600 underline">info@agriscience.com</a></p>
-                <p className="text-gray-700 leading-relaxed mb-2">Phone: <a href="tel:+94112345678" className="text-primary-600 underline">+94 11 234 5678</a></p>
+                <p className="text-gray-700 leading-relaxed mb-2"><strong>AgriScience Internationals (pvt) LTD</strong></p>
+                <p className="text-gray-700 leading-relaxed mb-2">Thushara, Medagoda, Kamburugamuwa, Matara</p>
+                <p className="text-gray-700 leading-relaxed mb-2">Email: <a href="mailto:agriinternationalco@gmail.com" className="text-primary-600 underline">agriinternationalco@gmail.com</a></p>
+                <p className="text-gray-700 leading-relaxed mb-2">Phone: <a href="tel:+94773667823" className="text-primary-600 underline">+94 77 366 7823</a></p>
                 <p className="text-gray-700 leading-relaxed">Website: <a href="https://www.agriscience.lk" className="text-primary-600 underline">www.agriscience.lk</a></p>
               </div>
             </section>

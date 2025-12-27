@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabaseClient';
 
 interface Product {
   id: string;
@@ -50,26 +49,18 @@ export default function AdminProductForm({
 
   const uploadImage = async (file: File): Promise<string | null> => {
     try {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Math.random()}.${fileExt}`;
-      const filePath = `products/${fileName}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from('product-images')
-        .upload(filePath, file, {
-          cacheControl: '3600',
-          upsert: false,
-        });
-
-      if (uploadError) throw uploadError;
-
-      const {
-        data: { publicUrl },
-      } = supabase.storage.from('product-images').getPublicUrl(filePath);
-
-      return publicUrl;
+      // Convert file to base64 data URL for storage
+      // This allows images to be stored without file system access
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          resolve(reader.result as string);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
     } catch (error: any) {
-      console.error('Error uploading image:', error);
+      console.error('Error processing image:', error);
       throw error;
     }
   };
@@ -82,32 +73,45 @@ export default function AdminProductForm({
     try {
       let imageUrl = product?.image_url || null;
 
-      // Upload new image if provided
+      // Process new image if provided
       if (imageFile) {
         imageUrl = await uploadImage(imageFile);
       }
 
+      const productData = {
+        name,
+        description,
+        image_url: imageUrl,
+      };
+
       if (product) {
         // Update existing product
-        const { error } = await supabase
-          .from('products')
-          .update({
-            name,
-            description,
-            image_url: imageUrl,
-          })
-          .eq('id', product.id);
-
-        if (error) throw error;
-      } else {
-        // Create new product
-        const { error } = await supabase.from('products').insert({
-          name,
-          description,
-          image_url: imageUrl,
+        const response = await fetch(`/api/products/${product.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(productData),
         });
 
-        if (error) throw error;
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to update product');
+        }
+      } else {
+        // Create new product
+        const response = await fetch('/api/products', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(productData),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to create product');
+        }
       }
 
       onSuccess();

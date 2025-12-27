@@ -1,6 +1,10 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /api/
+
+Sitemap: https://agriscience.lk/sitemap.xml
+
 
 
 

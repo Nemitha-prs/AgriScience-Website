@@ -1,13 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
-import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Lock, Mail, AlertCircle } from 'lucide-react';
 
 export default function AdminLoginPage() {
-  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -19,26 +16,42 @@ export default function AdminLoginPage() {
     setError('');
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ email, password }),
       });
 
-      if (error) {
-        setError(error.message);
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.error || 'Login failed');
         setLoading(false);
         return;
       }
 
-      if (data.session) {
-        router.refresh();
-        await new Promise(resolve => setTimeout(resolve, 500));
-        router.push('/admin/dashboard');
-      } else {
-        setError('Login failed. No session created.');
-        setLoading(false);
-      }
+      const data = await response.json();
+      console.log('[CLIENT] Login response:', data);
+
+      // Verify cookie was set by checking it
+      const checkCookie = () => {
+        const cookies = document.cookie.split(';');
+        const adminCookie = cookies.find(c => c.trim().startsWith('admin_session='));
+        console.log('[CLIENT] Cookie check:', adminCookie ? 'Found' : 'Not found');
+        return !!adminCookie;
+      };
+
+      // Wait a bit and check cookie, then redirect
+      setTimeout(() => {
+        const hasCookie = checkCookie();
+        console.log('[CLIENT] Has cookie before redirect:', hasCookie);
+        console.log('[CLIENT] Redirecting to dashboard...');
+        window.location.href = '/admin/dashboard';
+      }, 200);
     } catch (err: any) {
+      console.error('Login error:', err);
       setError(err.message || 'An unexpected error occurred');
       setLoading(false);
     }

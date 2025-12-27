@@ -53,6 +53,7 @@ export default function Navbar() {
             {/* Logo with scale animation */}
             <Link
               href="/"
+              prefetch={true}
               className="flex items-center flex-shrink-0 transition-opacity duration-200 hover:opacity-90 relative z-10"
             >
               <motion.div
@@ -72,6 +73,7 @@ export default function Navbar() {
                   fill
                   className="object-contain object-left transition-all duration-500"
                   priority
+                  unoptimized
                   sizes="(max-width: 768px) 240px, (max-width: 1024px) 320px, 420px"
                   style={{
                     filter: isScrolled 
@@ -88,6 +90,7 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
+                  prefetch={true}
                   className={`font-medium text-base transition-all duration-300 whitespace-nowrap relative group ${
                     isScrolled 
                       ? 'text-neutral-charcoal hover:text-primary-green' 
@@ -110,6 +113,7 @@ export default function Navbar() {
               {/* CTA Button with gradient animation */}
               <Link
                 href="/contact"
+                prefetch={true}
                 className={`relative px-6 py-2.5 rounded-lg font-semibold text-base transition-all duration-300 whitespace-nowrap ${
                   isScrolled
                     ? 'bg-primary-green hover:bg-primary-green-dark text-white shadow-md hover:shadow-lg'
@@ -124,6 +128,7 @@ export default function Navbar() {
             <div className="hidden lg:flex xl:hidden items-center space-x-4 flex-shrink-0 ml-4">
               <Link
                 href="/products"
+                prefetch={true}
                 className={`font-medium text-sm transition-all duration-300 whitespace-nowrap ${
                   isScrolled 
                     ? 'text-neutral-charcoal hover:text-primary-green' 
@@ -134,6 +139,7 @@ export default function Navbar() {
               </Link>
               <Link
                 href="/contact"
+                prefetch={true}
                 className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 whitespace-nowrap ${
                   isScrolled
                     ? 'bg-primary-green hover:bg-primary-green-dark text-white'
@@ -204,6 +210,7 @@ export default function Navbar() {
                     >
                       <Link
                         href={item.href}
+                        prefetch={true}
                         onClick={() => setIsMobileMenuOpen(false)}
                         className="text-xl font-semibold text-neutral-charcoal hover:text-primary-green transition-colors duration-200 py-2 block"
                       >
@@ -220,6 +227,7 @@ export default function Navbar() {
                   >
                     <Link
                       href="/contact"
+                      prefetch={true}
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="block w-full px-6 py-3 bg-primary-green hover:bg-primary-green-dark text-white rounded-lg font-semibold text-center transition-colors duration-200"
                     >

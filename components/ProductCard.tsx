@@ -44,7 +44,7 @@ export default function ProductCard({
       transition={{ duration: 0.5 }}
       className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 card-lift"
     >
-      <Link href={`/products/${id}`}>
+      <Link href={`/products/${id}`} prefetch={true}>
         {/* Image Container */}
         <div className="relative h-64 image-zoom bg-neutral-light">
           {imageUrl ? (

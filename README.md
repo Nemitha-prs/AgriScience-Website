@@ -5,7 +5,7 @@ A complete, production-ready website for an agriculture fertilizer company with 
 ## Tech Stack
 
 - **Frontend**: Next.js 14 (App Router), React, Tailwind CSS
-- **Backend**: Supabase (PostgreSQL + Auth + Storage)
+- **Backend**: Local data storage (in-memory)
 - **Deployment**: Vercel
 
 ## Features
@@ -19,10 +19,10 @@ A complete, production-ready website for an agriculture fertilizer company with 
 - SEO optimized
 
 ### Admin Panel
-- Secure login (predefined admin users only)
+- Secure login (environment-based credentials)
 - Dashboard for managing products
 - CRUD operations for products
-- Image upload to Supabase Storage
+- Image upload support
 
 ## Setup Instructions
 
@@ -32,38 +32,18 @@ A complete, production-ready website for an agriculture fertilizer company with 
 npm install
 ```
 
-### 2. Supabase Setup
+### 2. Configure Environment Variables
 
-1. Create a new project at [supabase.com](https://supabase.com)
-2. Go to Settings > API to get your project URL and anon key
-3. Create a `.env.local` file in the root directory:
+Create a `.env.local` file in the root directory:
 
 ```env
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+ADMIN_EMAIL=your-admin-email@example.com
+ADMIN_PASSWORD=your-secure-password
+ADMIN_OWNER_EMAILS=your-admin-email@example.com
+RESEND_API_KEY=your_resend_api_key_here
 ```
 
-### 3. Database Setup
-
-1. Go to Supabase SQL Editor
-2. Run the SQL from `supabase/schema.sql` to create the products table
-3. Run the SQL from `supabase/rls_policies.sql` to set up Row Level Security
-
-### 4. Storage Setup
-
-1. In Supabase Dashboard, go to Storage
-2. Create a new bucket named `product-images`
-3. Set it to public (anyone can read)
-4. Add policy: Only authenticated users can upload
-
-### 5. Create Admin User
-
-1. In Supabase Dashboard, go to Authentication > Users
-2. Click "Add user" > "Create new user"
-3. Enter email and password for your admin account
-4. Note: Only users created manually can log in (public signup is disabled)
-
-### 6. Run Development Server
+### 3. Run Development Server
 
 ```bash
 npm run dev
@@ -86,6 +66,10 @@ Access admin panel at [http://localhost:3000/admin/login](http://localhost:3000/
   /admin
     /login/page.tsx
     /dashboard/page.tsx
+  /api
+    /products                  -> Product CRUD API
+    /auth                      -> Authentication API
+    /contact                   -> Contact form API
 
 /components
   Navbar.tsx
@@ -94,19 +78,17 @@ Access admin panel at [http://localhost:3000/admin/login](http://localhost:3000/
   AdminProductForm.tsx
 
 /lib
-  supabaseClient.ts
-  auth.ts
-
-/middleware.ts                -> Admin route protection
+  productsData.ts              -> Local product storage
+  auth.ts                      -> Authentication system
+  admin.ts                     -> Admin utilities
 ```
 
 ## Security Features
 
 - Server-side route protection for admin pages
-- Row Level Security (RLS) on database
-- Public signup disabled
-- Only predefined admin users can authenticate
+- Environment-based authentication
 - Admin routes excluded from robots.txt
+- Session-based authentication
 
 ## Deployment
 
@@ -114,12 +96,3 @@ Access admin panel at [http://localhost:3000/admin/login](http://localhost:3000/
 2. Import project in Vercel
 3. Add environment variables in Vercel dashboard
 4. Deploy
-
-
-
-
-
-
-
-
-

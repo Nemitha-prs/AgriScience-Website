@@ -1,75 +1,74 @@
-import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
+import { verifyToken } from '@/lib/auth';
 
 export async function middleware(request: NextRequest) {
-  let response = NextResponse.next({
-    request: {
-      headers: request.headers,
-    },
-  });
+  const pathname = request.nextUrl.pathname;
+  
+  // Get token from cookie
+  const cookie = request.cookies.get('admin_session');
+  const token = cookie?.value;
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return request.cookies.get(name)?.value;
-        },
-        set(name: string, value: string, options: CookieOptions) {
-          request.cookies.set({
-            name,
-            value,
-            ...options,
-          });
-          response = NextResponse.next({
-            request: {
-              headers: request.headers,
-            },
-          });
-          response.cookies.set({
-            name,
-            value,
-            ...options,
-          });
-        },
-        remove(name: string, options: CookieOptions) {
-          request.cookies.set({
-            name,
-            value: '',
-            ...options,
-          });
-          response = NextResponse.next({
-            request: {
-              headers: request.headers,
-            },
-          });
-          response.cookies.set({
-            name,
-            value: '',
-            ...options,
-          });
-        },
-      },
+  // Allow login page
+  if (pathname === '/admin/login') {
+    if (token) {
+      const payload = await verifyToken(token);
+      if (payload) {
+        return NextResponse.redirect(new URL('/admin/dashboard', request.url));
+      }
     }
-  );
+    const response = NextResponse.next();
+    addCacheHeaders(response, pathname, request);
+    return response;
+  }
 
-  const { data: { session } } = await supabase.auth.getSession();
-
-  // Protect admin routes except login
-  if (request.nextUrl.pathname.startsWith('/admin') && 
-      !request.nextUrl.pathname.startsWith('/admin/login')) {
-    if (!session) {
+  // Protect all other admin routes
+  if (pathname.startsWith('/admin')) {
+    if (!token) {
       return NextResponse.redirect(new URL('/admin/login', request.url));
     }
+    
+    const payload = await verifyToken(token);
+    if (!payload) {
+      const response = NextResponse.redirect(new URL('/admin/login', request.url));
+      // Clear invalid cookie
+      response.cookies.delete('admin_session');
+      return response;
+    }
+    const response = NextResponse.next();
+    addCacheHeaders(response, pathname, request);
+    return response;
   }
 
-  // Redirect to dashboard if already logged in
-  if (request.nextUrl.pathname === '/admin/login' && session) {
-    return NextResponse.redirect(new URL('/admin/dashboard', request.url));
-  }
-
+  // Add cache headers for all other routes
+  const response = NextResponse.next();
+  addCacheHeaders(response, pathname, request);
   return response;
+}
+
+/**
+ * Add cache headers for static assets and public API responses
+ * Non-intrusive - only adds headers, doesn't modify responses
+ */
+function addCacheHeaders(response: NextResponse, pathname: string, request: NextRequest) {
+  // Cache static assets (images, fonts, etc.)
+  if (
+    pathname.startsWith('/images/') ||
+    pathname.startsWith('/_next/static/') ||
+    pathname.match(/\.(jpg|jpeg|png|gif|svg|webp|avif|ico|woff|woff2|ttf|eot)$/i)
+  ) {
+    response.headers.set(
+      'Cache-Control',
+      'public, max-age=31536000, immutable'
+    );
+  }
+
+  // Cache public API responses (products list)
+  if (pathname === '/api/products' && request.method === 'GET') {
+    response.headers.set(
+      'Cache-Control',
+      'public, s-maxage=60, stale-while-revalidate=300'
+    );
+  }
 }
 
 export const config = {
