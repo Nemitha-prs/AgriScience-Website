@@ -78,21 +78,40 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const success = await deleteProduct(params.id);
+    const productId = params.id;
+    console.log('[API] Delete request for product ID:', productId);
+    
+    if (!productId) {
+      return NextResponse.json(
+        { error: 'Product ID is required' },
+        { status: 400 }
+      );
+    }
+
+    const success = await deleteProduct(productId);
 
     if (!success) {
+      console.log('[API] Delete failed: Product not found or delete operation failed');
       return NextResponse.json(
         { error: 'Product not found' },
         { status: 404 }
       );
     }
 
-    console.log('[API] Product deleted:', params.id);
-    return NextResponse.json({ success: true });
+    console.log('[API] Product successfully deleted:', productId);
+    return NextResponse.json({ success: true, message: 'Product deleted successfully' });
   } catch (error: any) {
     console.error('[API] Error deleting product:', error);
+    console.error('[API] Error details:', {
+      message: error.message,
+      stack: error.stack,
+      code: error.code,
+    });
     return NextResponse.json(
-      { error: 'Failed to delete product' },
+      { 
+        error: 'Failed to delete product',
+        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      },
       { status: 500 }
     );
   }

@@ -81,7 +81,12 @@ async function saveProducts(productsToSave?: Product[]): Promise<void> {
   
   if (productsToWrite === null) {
     console.error('[PRODUCTS] Cannot save: products array is null');
-    return;
+    throw new Error('Cannot save: products array is null');
+  }
+
+  if (!Array.isArray(productsToWrite)) {
+    console.error('[PRODUCTS] Cannot save: products is not an array');
+    throw new Error('Cannot save: products is not an array');
   }
 
   try {
@@ -89,7 +94,20 @@ async function saveProducts(productsToSave?: Product[]): Promise<void> {
     
     // Write to a temporary file first, then rename (atomic operation)
     const tempFile = DATA_FILE + '.tmp';
-    await fs.writeFile(tempFile, JSON.stringify(productsToWrite, null, 2), 'utf-8');
+    
+    // Clean up any existing temp file from previous failed writes
+    try {
+      await fs.unlink(tempFile);
+    } catch (unlinkError: any) {
+      // Ignore if temp file doesn't exist
+      if (unlinkError.code !== 'ENOENT') {
+        console.warn('[PRODUCTS] Could not remove existing temp file:', unlinkError.message);
+      }
+    }
+    
+    // Write to temp file
+    const jsonContent = JSON.stringify(productsToWrite, null, 2);
+    await fs.writeFile(tempFile, jsonContent, 'utf-8');
     
     // Atomic rename (replaces old file)
     await fs.rename(tempFile, DATA_FILE);
@@ -98,8 +116,22 @@ async function saveProducts(productsToSave?: Product[]): Promise<void> {
     products = productsToWrite;
     
     console.log('[PRODUCTS] Saved', productsToWrite.length, 'products to file');
-  } catch (error) {
+  } catch (error: any) {
     console.error('[PRODUCTS] Error saving products:', error);
+    console.error('[PRODUCTS] Error details:', {
+      message: error.message,
+      code: error.code,
+      path: DATA_FILE,
+    });
+    
+    // Try to clean up temp file on error
+    try {
+      const tempFile = DATA_FILE + '.tmp';
+      await fs.unlink(tempFile);
+    } catch (cleanupError) {
+      // Ignore cleanup errors
+    }
+    
     throw error; // Re-throw to ensure caller knows if save failed
   }
 }
@@ -173,13 +205,29 @@ export async function updateProduct(id: string, productData: Partial<Omit<Produc
  * Delete a product
  */
 export async function deleteProduct(id: string): Promise<boolean> {
-  const loadedProducts = await loadProducts();
-  
-  const index = loadedProducts.findIndex(p => p.id === id);
-  if (index === -1) return false;
-  
-  const updatedProducts = loadedProducts.filter(p => p.id !== id);
-  await saveProducts(updatedProducts);
-  
-  return true;
+  try {
+    const loadedProducts = await loadProducts();
+    
+    const index = loadedProducts.findIndex(p => p.id === id);
+    if (index === -1) {
+      console.log('[PRODUCTS] Delete failed: Product not found with id:', id);
+      return false;
+    }
+    
+    console.log('[PRODUCTS] Deleting product:', id, 'from', loadedProducts.length, 'products');
+    const updatedProducts = loadedProducts.filter(p => p.id !== id);
+    
+    if (updatedProducts.length !== loadedProducts.length - 1) {
+      console.error('[PRODUCTS] Delete failed: Product count mismatch after filter');
+      return false;
+    }
+    
+    await saveProducts(updatedProducts);
+    console.log('[PRODUCTS] Successfully deleted product:', id, 'New count:', updatedProducts.length);
+    
+    return true;
+  } catch (error: any) {
+    console.error('[PRODUCTS] Error in deleteProduct:', error);
+    throw error; // Re-throw so API route can handle it
+  }
 }
