@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { NextRequest, NextResponse } from 'next/server';
 import { validateSession, getSessionEmail } from '@/lib/auth';
 import { isOwnerEmail } from '@/lib/admin';
