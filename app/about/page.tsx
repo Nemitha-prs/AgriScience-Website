@@ -386,7 +386,7 @@ export default function AboutPage() {
                           className="relative"
                         >
                           <h3 className="text-3xl md:text-4xl font-heading font-bold text-white mb-3 leading-tight drop-shadow-2xl">
-                            [Director Name]
+                            T.H.M Duminda Thushara
                           </h3>
                           <div className="flex items-center gap-3">
                             <Briefcase className="w-5 h-5 text-secondary-gold drop-shadow-lg" />
