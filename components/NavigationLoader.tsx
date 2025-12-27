@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 
@@ -8,7 +8,7 @@ export default function NavigationLoader() {
   const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const prevPathnameRef = useState<string | null>(null);
+  const prevPathnameRef = useRef<string | null>(null);
 
   useEffect(() => {
     setIsMounted(true);
@@ -18,15 +18,15 @@ export default function NavigationLoader() {
     if (!isMounted) return;
 
     // Skip on initial mount (page refresh/initial load)
-    if (prevPathnameRef === null) {
-      prevPathnameRef = pathname;
+    if (prevPathnameRef.current === null) {
+      prevPathnameRef.current = pathname;
       return;
     }
 
     // Only show loading if pathname changed (navigation occurred)
-    if (pathname !== prevPathnameRef) {
+    if (pathname !== prevPathnameRef.current) {
       setIsLoading(true);
-      prevPathnameRef = pathname;
+      prevPathnameRef.current = pathname;
 
       // Wait for page to be fully loaded
       const checkPageLoaded = () => {

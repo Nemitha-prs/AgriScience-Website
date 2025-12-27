@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 interface Product {
   id: string;
@@ -173,11 +174,13 @@ export default function AdminProductForm({
           className="w-full px-3 py-2 border border-earth-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
         />
         {imagePreview && (
-          <div className="mt-2">
-            <img
+          <div className="mt-2 relative w-32 h-32">
+            <Image
               src={imagePreview}
               alt="Preview"
-              className="w-32 h-32 object-cover rounded border border-earth-300"
+              fill
+              className="object-cover rounded border border-earth-300"
+              unoptimized
             />
           </div>
         )}

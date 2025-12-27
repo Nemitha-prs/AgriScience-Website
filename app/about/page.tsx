@@ -280,7 +280,7 @@ export default function AboutPage() {
                         To provide farmers with premium-quality fertilizers and agricultural solutions that enhance crop productivity while promoting environmental sustainability.
                       </p>
                       <p className="text-base text-neutral-gray leading-relaxed">
-                        We're more than suppliers—we're partners in your farming journey. Through expert guidance and unwavering support, we help you make informed decisions about soil nutrition and crop management.
+                        We&apos;re more than suppliers—we&apos;re partners in your farming journey. Through expert guidance and unwavering support, we help you make informed decisions about soil nutrition and crop management.
                       </p>
                     </div>
                   </div>
@@ -403,7 +403,7 @@ export default function AboutPage() {
                 <div className="lg:col-span-2 space-y-6">
                   <div className="bg-gradient-to-br from-primary-green/5 to-primary-green-dark/5 rounded-2xl p-8 border-l-4 border-primary-green">
                     <p className="text-xl text-neutral-charcoal leading-relaxed italic font-medium">
-                      "Our commitment is to bridge the gap between global agricultural innovation and local farming needs, ensuring every Sri Lankan farmer has access to world-class solutions."
+                      &ldquo;Our commitment is to bridge the gap between global agricultural innovation and local farming needs, ensuring every Sri Lankan farmer has access to world-class solutions.&rdquo;
                     </p>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

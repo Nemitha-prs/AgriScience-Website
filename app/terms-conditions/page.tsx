@@ -32,7 +32,7 @@ export default function TermsConditionsPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Agreement to Terms</h2>
               <p className="text-gray-700 leading-relaxed">
-                These Terms and Conditions ("Terms") govern your use of the AgriScience Internationals (pvt) LTD website and services. By accessing or using our website, you agree to be bound by these Terms. If you do not agree, please discontinue use immediately.
+                These Terms and Conditions (&ldquo;Terms&rdquo;) govern your use of the AgriScience Internationals (pvt) LTD website and services. By accessing or using our website, you agree to be bound by these Terms. If you do not agree, please discontinue use immediately.
               </p>
             </section>
 
@@ -117,7 +117,7 @@ export default function TermsConditionsPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Disclaimer of Warranties</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
-                The website and all information are provided "as is" and "as available" without warranties of any kind, either express or implied, including but not limited to:
+                The website and all information are provided &ldquo;as is&rdquo; and &ldquo;as available&rdquo; without warranties of any kind, either express or implied, including but not limited to:
               </p>
               <ul className="list-disc pl-6 mb-4 text-gray-700 leading-relaxed space-y-2">
                 <li>Merchantability</li>

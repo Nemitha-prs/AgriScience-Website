@@ -73,31 +73,34 @@ export default function StatisticsCounter() {
           transition={{ duration: 0.6 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-8"
         >
-          {stats.map((stat, index) => {
-            const count = useCounter(stat.number, 2000, inView);
-            return (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={inView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-                className="text-center"
-              >
-                <div className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-2">
-                  {count}{stat.suffix}
-                </div>
-                <div className="text-lg md:text-xl font-heading font-semibold mb-1">
-                  {stat.label}
-                </div>
-                <div className="text-sm text-white/80">
-                  {stat.sublabel}
-                </div>
-              </motion.div>
-            );
-          })}
+          {stats.map((stat, index) => (
+            <StatItem key={stat.label} stat={stat} index={index} inView={inView} />
+          ))}
         </motion.div>
       </div>
     </section>
   );
 }
 
+function StatItem({ stat, index, inView }: { stat: { number: number; suffix: string; label: string; sublabel: string }; index: number; inView: boolean }) {
+  const count = useCounter(stat.number, 2000, inView);
+  
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={inView ? { opacity: 1, scale: 1 } : {}}
+      transition={{ delay: index * 0.1, duration: 0.5 }}
+      className="text-center"
+    >
+      <div className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-2">
+        {count}{stat.suffix}
+      </div>
+      <div className="text-lg md:text-xl font-heading font-semibold mb-1">
+        {stat.label}
+      </div>
+      <div className="text-sm text-white/80">
+        {stat.sublabel}
+      </div>
+    </motion.div>
+  );
+}

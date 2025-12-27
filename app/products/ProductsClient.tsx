@@ -81,6 +81,7 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
     if (categoryParam) {
       setSelectedCategory(categoryParam);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Debounce search input

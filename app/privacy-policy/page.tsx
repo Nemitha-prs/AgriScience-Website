@@ -32,7 +32,7 @@ export default function PrivacyPolicyPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Introduction</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
-                AgriScience Internationals (pvt) LTD ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains our data practices when you visit our website.
+                AgriScience Internationals (pvt) LTD (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;) is committed to protecting your privacy. This Privacy Policy explains our data practices when you visit our website.
               </p>
               <p className="text-gray-700 leading-relaxed">
                 By accessing or using our website, you agree to the terms of this Privacy Policy. If you do not agree with the terms, please do not access the site.
@@ -53,7 +53,7 @@ export default function PrivacyPolicyPage() {
                 <li>Use analytics or tracking tools to monitor user behavior</li>
                 <li>Store browsing history or preferences</li>
                 <li>Use cookies for tracking or advertising purposes</li>
-                <li>Share or sell any user data (because we don't collect any)</li>
+                <li>Share or sell any user data (because we don&apos;t collect any)</li>
               </ul>
             </section>
 
@@ -82,7 +82,7 @@ export default function PrivacyPolicyPage() {
               <ul className="list-disc pl-6 mb-4 text-gray-700 leading-relaxed space-y-2">
                 <li>Admin login credentials are stored securely in environment variables (not in the website code)</li>
                 <li>When an admin logs in, a secure session cookie is created for authentication purposes</li>
-                <li>This cookie is only used to maintain the admin's login session and is not used to track regular website visitors</li>
+                <li>This cookie is only used to maintain the admin&apos;s login session and is not used to track regular website visitors</li>
                 <li>The admin session cookie expires after 24 hours or when the admin logs out</li>
                 <li>Regular website visitors are not affected by the admin login system</li>
               </ul>
@@ -133,14 +133,14 @@ export default function PrivacyPolicyPage() {
                 <li>Share information with social media platforms for advertising</li>
               </ul>
               <p className="text-gray-700 leading-relaxed">
-                The only exception is if we are required by law, court order, or governmental authority to disclose information. However, since we don't collect user data, there would be no user data to disclose.
+                The only exception is if we are required by law, court order, or governmental authority to disclose information. However, since we don&apos;t collect user data, there would be no user data to disclose.
               </p>
             </section>
 
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Data Security</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
-                While we don't collect user data, we take security seriously:
+                While we don&apos;t collect user data, we take security seriously:
               </p>
               <ul className="list-disc pl-6 mb-4 text-gray-700 leading-relaxed space-y-2">
                 <li>Our website uses SSL/TLS encryption for secure data transmission</li>
@@ -212,7 +212,7 @@ export default function PrivacyPolicyPage() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Children's Privacy</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Children&apos;s Privacy</h2>
               <p className="text-gray-700 leading-relaxed">
                 Our website is not intended for individuals under 18 years of age. Since we do not collect personal information, we do not knowingly collect information from children. If you are a parent or guardian and believe your child has contacted us, please contact us immediately.
               </p>
@@ -221,7 +221,7 @@ export default function PrivacyPolicyPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Changes to This Privacy Policy</h2>
               <p className="text-gray-700 leading-relaxed">
-                We may update this Privacy Policy from time to time to reflect changes in our practices or legal requirements. We will notify you of significant changes by posting the new policy on this page with an updated "Last Updated" date. Your continued use of the website after changes constitutes acceptance of the updated policy.
+                We may update this Privacy Policy from time to time to reflect changes in our practices or legal requirements. We will notify you of significant changes by posting the new policy on this page with an updated &ldquo;Last Updated&rdquo; date. Your continued use of the website after changes constitutes acceptance of the updated policy.
               </p>
             </section>
 

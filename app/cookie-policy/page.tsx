@@ -39,7 +39,7 @@ export default function CookiePolicyPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Our Cookie Usage</h2>
               <p className="text-gray-700 leading-relaxed mb-4">
-                We use minimal cookies on our website. We do not use cookies for tracking, advertising, or analytics purposes. Here's what we actually use:
+                We use minimal cookies on our website. We do not use cookies for tracking, advertising, or analytics purposes. Here&apos;s what we actually use:
               </p>
               
               <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Essential Cookies (Admin Only)</h3>
@@ -47,7 +47,7 @@ export default function CookiePolicyPage() {
                 We use one cookie that is only set when an authorized admin logs into the admin panel:
               </p>
               <ul className="list-disc pl-6 mb-4 text-gray-700 leading-relaxed space-y-2">
-                <li><strong>admin_session:</strong> A secure authentication cookie that maintains the admin's login session. This cookie is only created when an authorized administrator logs in and is not used for regular website visitors.</li>
+                <li><strong>admin_session:</strong> A secure authentication cookie that maintains the admin&apos;s login session. This cookie is only created when an authorized administrator logs in and is not used for regular website visitors.</li>
                 <li>This cookie expires after 24 hours or when the admin logs out</li>
                 <li>Regular website visitors do not receive this cookie</li>
               </ul>
@@ -58,8 +58,8 @@ export default function CookiePolicyPage() {
               </p>
               <ul className="list-disc pl-6 mb-4 text-gray-700 leading-relaxed space-y-2">
                 <li><strong>cookieConsent:</strong> Stores your choice to accept or reject cookies (stored locally on your device, not sent to our servers)</li>
-                <li>This is stored in your browser's local storage, not as a cookie</li>
-                <li>It only remembers your preference so we don't show the cookie consent banner repeatedly</li>
+                <li>This is stored in your browser&apos;s local storage, not as a cookie</li>
+                <li>It only remembers your preference so we don&apos;t show the cookie consent banner repeatedly</li>
               </ul>
             </section>
 
@@ -84,12 +84,12 @@ export default function CookiePolicyPage() {
                 When you first visit our website, you may see a cookie consent banner. This banner allows you to:
               </p>
               <ul className="list-disc pl-6 mb-4 text-gray-700 leading-relaxed space-y-2">
-                <li>Accept all cookies (though we only use the admin session cookie, which you won't receive unless you're an admin)</li>
-                <li>Reject non-essential cookies (though we don't have any non-essential cookies)</li>
+                <li>Accept all cookies (though we only use the admin session cookie, which you won&apos;t receive unless you&apos;re an admin)</li>
+                <li>Reject non-essential cookies (though we don&apos;t have any non-essential cookies)</li>
                 <li>Customize your preferences</li>
               </ul>
               <p className="text-gray-700 leading-relaxed">
-                Your preference is stored locally in your browser (using localStorage, not cookies) so we remember your choice and don't show the banner repeatedly.
+                Your preference is stored locally in your browser (using localStorage, not cookies) so we remember your choice and don&apos;t show the banner repeatedly.
               </p>
             </section>
 
@@ -98,7 +98,7 @@ export default function CookiePolicyPage() {
               
               <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Browser Settings</h3>
               <p className="text-gray-700 leading-relaxed mb-4">
-                You can control cookies through your browser settings. Here's how:
+                You can control cookies through your browser settings. Here&apos;s how:
               </p>
               <ul className="list-disc pl-6 mb-4 text-gray-700 leading-relaxed space-y-2">
                 <li><strong>Chrome:</strong> Settings &gt; Privacy and Security &gt; Cookies and other site data</li>
@@ -114,7 +114,7 @@ export default function CookiePolicyPage() {
               <ul className="list-disc pl-6 mb-4 text-gray-700 leading-relaxed space-y-2">
                 <li>You can still browse all pages and view all content</li>
                 <li>You can still use the contact form</li>
-                <li>The cookie consent banner may appear on each visit (since we can't remember your preference)</li>
+                <li>The cookie consent banner may appear on each visit (since we can&apos;t remember your preference)</li>
                 <li>If you are an admin, you may need to log in more frequently</li>
               </ul>
             </section>
@@ -132,7 +132,7 @@ export default function CookiePolicyPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Updates to This Policy</h2>
               <p className="text-gray-700 leading-relaxed">
-                We may update this Cookie Policy to reflect changes in our practices or legal requirements. The "Last Updated" date indicates the most recent revision. Please review this policy periodically.
+                We may update this Cookie Policy to reflect changes in our practices or legal requirements. The &ldquo;Last Updated&rdquo; date indicates the most recent revision. Please review this policy periodically.
               </p>
             </section>
 

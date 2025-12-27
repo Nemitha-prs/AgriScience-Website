@@ -167,7 +167,7 @@ export default function ContactPage() {
               variants={itemVariants}
               className="text-xl md:text-2xl text-white/95 leading-relaxed max-w-2xl mx-auto font-heading font-medium"
             >
-              Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+              Have questions? We&apos;d love to hear from you. Send us a message and we&apos;ll respond as soon as possible.
             </motion.p>
           </motion.div>
         </div>
