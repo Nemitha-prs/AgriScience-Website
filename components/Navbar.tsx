@@ -3,14 +3,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { Search, Menu, X, Globe } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence, useScroll } from 'framer-motion';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [language, setLanguage] = useState('EN');
 
   const { scrollY } = useScroll();
 
@@ -109,60 +107,6 @@ export default function Navbar() {
 
             {/* Right Side Actions */}
             <div className="hidden lg:flex items-center space-x-4 flex-shrink-0 ml-4">
-              {/* Search with pulse animation */}
-              <div className="relative">
-                <button
-                  onClick={() => setIsSearchOpen(!isSearchOpen)}
-                  className={`p-2 transition-all duration-300 rounded-lg ${
-                    isScrolled 
-                      ? 'text-neutral-charcoal hover:text-primary-green hover:bg-neutral-cream' 
-                      : 'text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] hover:bg-white/10'
-                  }`}
-                  aria-label="Search"
-                >
-                  <Search className="h-5 w-5" />
-                </button>
-                
-                <AnimatePresence>
-                  {isSearchOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute right-0 top-full mt-2 w-72 bg-white rounded-xl shadow-2xl border border-neutral-light overflow-hidden"
-                    >
-                      <input
-                        type="text"
-                        placeholder="Search products..."
-                        className="w-full px-4 py-3 outline-none text-neutral-charcoal"
-                        autoFocus
-                      />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* Language Toggle with rotate animation */}
-              <div className="relative">
-                <button className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-all duration-300 ${
-                  isScrolled 
-                    ? 'hover:bg-neutral-cream' 
-                    : 'hover:bg-white/10'
-                }`}>
-                  <Globe className={`h-4 w-4 transition-colors duration-300 ${
-                    isScrolled 
-                      ? 'text-neutral-charcoal' 
-                      : 'text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]'
-                  }`} />
-                  <span className={`text-sm font-medium transition-colors duration-300 ${
-                    isScrolled 
-                      ? 'text-neutral-charcoal' 
-                      : 'text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]'
-                  }`}>{language}</span>
-                </button>
-              </div>
-
               {/* CTA Button with gradient animation */}
               <Link
                 href="/contact"

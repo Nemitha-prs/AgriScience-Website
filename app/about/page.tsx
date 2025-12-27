@@ -34,6 +34,7 @@ function useSafeInView(options: { triggerOnce?: boolean; threshold?: number } = 
 export default function AboutPage() {
   const [isMounted, setIsMounted] = useState(false);
   const [activeTab, setActiveTab] = useState('mission');
+  const [directorImageError, setDirectorImageError] = useState(false);
 
   useEffect(() => { setIsMounted(true); }, []);
 
@@ -144,56 +145,106 @@ export default function AboutPage() {
       </section>
 
       {/* Our Story - Green BG */}
-      <section className="py-20 bg-gradient-to-br from-primary-green via-primary-green-dark to-primary-green relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-64 h-64 bg-white rounded-full blur-3xl" />
-          <div className="absolute bottom-10 right-10 w-96 h-96 bg-white rounded-full blur-3xl" />
+      <section className="py-16 relative overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url(/images/about/story-bg.jpg)' }} />
+          <div className="absolute inset-0 bg-gradient-to-br from-primary-green-dark/80 via-primary-green-dark/70 to-primary-green-dark/80" />
         </div>
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <motion.div ref={(n: HTMLElement | null) => { if (n) storyRef(n); }} variants={containerVariants}
             initial="hidden" animate={isMounted && storyInView ? 'visible' : 'hidden'} className="max-w-7xl mx-auto">
-            <motion.div variants={itemVariants} className="text-center mb-16">
+            <motion.div variants={itemVariants} className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-heading font-bold text-white mb-4">Our Story</h2>
-              <div className="w-24 h-1 bg-secondary-gold mx-auto mb-6" />
+              <div className="w-24 h-1 bg-white mx-auto mb-6" />
               <p className="text-lg text-white/90 max-w-3xl mx-auto">A journey of growth, innovation, and unwavering commitment to Sri Lankan agriculture</p>
             </motion.div>
-            <div className="space-y-8 md:space-y-12">
-              {milestones.map((m, i) => (
-                <motion.div key={m.year} variants={itemVariants} className="relative">
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                    <div className="md:col-span-2 flex justify-center md:justify-end">
-                      <motion.div whileHover={{ scale: 1.1 }}
-                        className="inline-flex items-center justify-center w-24 h-24 rounded-2xl bg-white/10 backdrop-blur-sm border-2 border-white/30 shadow-xl">
-                        <span className="text-2xl font-heading font-bold text-white">{m.year}</span>
-                      </motion.div>
-                    </div>
-                    <div className="hidden md:block md:col-span-1">
-                      <div className="w-full h-0.5 bg-white/30 relative">
-                        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-secondary-gold" />
-                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-white" />
-                      </div>
-                    </div>
-                    <div className="md:col-span-9">
-                      <motion.div whileHover={{ x: 10 }} className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-2xl border border-white/50">
-                        <div className="flex items-start gap-4">
-                          <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-primary-green to-primary-green-dark flex items-center justify-center">
-                            <CheckCircle className="w-6 h-6 text-white" />
+            
+            {/* Modern Stepped Timeline */}
+            <motion.div variants={itemVariants} className="relative max-w-6xl mx-auto">
+              <div className="hidden lg:block">
+                <div className="space-y-0">
+                  {milestones.map((m, i) => (
+                    <motion.div 
+                      key={m.year}
+                      initial={{ opacity: 0, x: i % 2 === 0 ? -80 : 80 }}
+                      animate={isMounted && storyInView ? { opacity: 1, x: 0 } : { opacity: 0, x: i % 2 === 0 ? -80 : 80 }}
+                      transition={{ delay: i * 0.2, duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
+                      className={`flex items-stretch gap-0 ${i % 2 === 0 ? '' : 'flex-row-reverse'}`}
+                    >
+                      {/* Content Card */}
+                      <motion.div 
+                        whileHover={{ scale: 1.02, y: -8 }}
+                        className="w-[45%] bg-white rounded-3xl p-8 shadow-2xl relative group overflow-hidden"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary-green/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="relative z-10">
+                          <div className="flex items-center gap-4 mb-4">
+                            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-green to-primary-green-dark flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                              <Sprout className="w-7 h-7 text-white" />
+                            </div>
+                            <div>
+                              <span className="text-3xl font-heading font-bold text-primary-green block leading-none">{m.year}</span>
+                            </div>
                           </div>
-                          <div className="flex-1">
-                            <h3 className="text-2xl font-heading font-bold text-neutral-charcoal mb-2">{m.title}</h3>
-                            <p className="text-base text-neutral-gray leading-relaxed">{m.description}</p>
-                          </div>
+                          <h3 className="text-2xl font-heading font-bold text-neutral-charcoal mb-3 group-hover:text-primary-green transition-colors">{m.title}</h3>
+                          <p className="text-base text-neutral-gray leading-relaxed">{m.description}</p>
+                        </div>
+                        <div className={`absolute top-1/2 -translate-y-1/2 w-12 h-12 ${i % 2 === 0 ? '-right-6' : '-left-6'}`}>
+                          <div className="w-full h-full rounded-full bg-white shadow-xl border-4 border-primary-green" />
                         </div>
                       </motion.div>
-                    </div>
-                  </div>
-                  {i < milestones.length - 1 && <div className="md:hidden flex justify-center my-6"><div className="w-0.5 h-8 bg-white/30" /></div>}
-                </motion.div>
-              ))}
-            </div>
+                      
+                      {/* Spacer */}
+                      <div className="w-[10%]" />
+                      
+                      {/* Empty space for alternating layout */}
+                      <div className="w-[45%]" />
+                    </motion.div>
+                  ))}
+                </div>
+                
+                {/* Central Timeline Line */}
+                <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-white/30 -translate-x-1/2 -z-10 rounded-full" />
+                <motion.div 
+                  initial={{ height: 0 }}
+                  animate={isMounted && storyInView ? { height: '100%' } : { height: 0 }}
+                  transition={{ duration: 2.5, ease: "easeInOut" }}
+                  className="absolute left-1/2 top-0 w-1 bg-gradient-to-b from-white via-white to-white/50 -translate-x-1/2 -z-10 rounded-full"
+                />
+              </div>
+              
+              <div className="lg:hidden space-y-6">
+                {milestones.map((m, i) => (
+                  <motion.div 
+                    key={m.year}
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={isMounted && storyInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+                    transition={{ delay: i * 0.15, duration: 0.6 }}
+                  >
+                    <motion.div 
+                      whileHover={{ scale: 1.02 }}
+                      className="bg-white rounded-2xl p-6 shadow-xl relative overflow-hidden"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary-green/5 to-transparent" />
+                      <div className="relative z-10">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-green to-primary-green-dark flex items-center justify-center shadow-md">
+                            <Sprout className="w-6 h-6 text-white" />
+                          </div>
+                          <span className="text-2xl font-heading font-bold text-primary-green">{m.year}</span>
+                        </div>
+                        <h3 className="text-xl font-heading font-bold text-neutral-charcoal mb-2">{m.title}</h3>
+                        <p className="text-sm text-neutral-gray leading-relaxed">{m.description}</p>
+                      </div>
+                    </motion.div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
+
 
       {/* Our Purpose - White BG */}
       <section className="py-20 bg-white">
@@ -258,10 +309,10 @@ export default function AboutPage() {
       </section>
 
       {/* Core Values - Green BG */}
-      <section className="py-20 bg-gradient-to-br from-primary-green via-primary-green-dark to-primary-green-dark relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 right-20 w-96 h-96 bg-white rounded-full blur-3xl" />
-          <div className="absolute bottom-20 left-20 w-64 h-64 bg-white rounded-full blur-3xl" />
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url(/images/about/core-bg.jpg)' }} />
+          <div className="absolute inset-0 bg-gradient-to-br from-primary-green-dark/95 via-primary-green-dark/90 to-primary-green-dark/95" />
         </div>
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <motion.div ref={(n: HTMLElement | null) => { if (n) valuesRef(n); }} variants={containerVariants}
@@ -304,22 +355,49 @@ export default function AboutPage() {
             <motion.div variants={itemVariants}>
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
                 <div className="lg:col-span-1">
-                  <motion.div whileHover={{ y: -10 }} className="relative group">
+                  <motion.div whileHover={{ y: -10, scale: 1.02 }} className="relative group">
                     <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-2xl">
-                      <Image src="/images/director/director.jpg" alt="Director" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 33vw"
-                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
-                      <div className="absolute inset-0 bg-gradient-to-t from-primary-green-dark via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary-green to-primary-green-dark flex items-center justify-center">
-                        <Briefcase className="w-32 h-32 text-white/20" />
-                      </div>
-                      <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                        <h3 className="text-2xl font-heading font-bold mb-1">[Director Name]</h3>
-                        <p className="text-secondary-gold font-semibold flex items-center gap-2">
-                          <Briefcase className="w-4 h-4" />Director & Founder
-                        </p>
+                      {/* Image - Fully Visible */}
+                      {!directorImageError ? (
+                        <Image 
+                          src="/images/director/director.jpg" 
+                          alt="Director" 
+                          fill 
+                          className="object-cover group-hover:scale-110 transition-transform duration-700" 
+                          sizes="(max-width: 1024px) 100vw, 33vw"
+                          onError={() => setDirectorImageError(true)}
+                          priority
+                        />
+                      ) : (
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary-green to-primary-green-dark flex items-center justify-center">
+                          <Briefcase className="w-32 h-32 text-white/20" />
+                        </div>
+                      )}
+                      
+                      {/* Subtle gradient only at bottom for text readability */}
+                      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
+                      
+                      {/* Text Overlay - No Background */}
+                      <div className="absolute bottom-0 left-0 right-0 p-8 z-10">
+                        <motion.div
+                          initial={{ y: 20, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          transition={{ delay: 0.3, duration: 0.6 }}
+                          className="relative"
+                        >
+                          <h3 className="text-3xl md:text-4xl font-heading font-bold text-white mb-3 leading-tight drop-shadow-2xl">
+                            [Director Name]
+                          </h3>
+                          <div className="flex items-center gap-3">
+                            <Briefcase className="w-5 h-5 text-secondary-gold drop-shadow-lg" />
+                            <p className="text-lg font-semibold text-white drop-shadow-2xl">
+                              Director & Co-Founder
+                            </p>
+                          </div>
+                        </motion.div>
                       </div>
                     </div>
-                    <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-secondary-gold/20 rounded-3xl -z-10 group-hover:scale-110 transition-transform" />
+                    <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-secondary-gold/10 rounded-3xl -z-10 group-hover:scale-110 transition-transform" />
                   </motion.div>
                 </div>
                 <div className="lg:col-span-2 space-y-6">

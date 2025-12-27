@@ -49,3 +49,4 @@ CREATE POLICY "Authenticated users can delete products"
 
 
 
+
